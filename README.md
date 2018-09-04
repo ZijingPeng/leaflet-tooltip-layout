@@ -17,7 +17,7 @@ This plugin is designed to avoid tooltip overlapping and make users find out the
      icon: icon
    });
 
-   layer.bindTooltip(“Hello World”, tooltipOption);
+   layer.bindTooltip("Hello World", tooltipOption);
    ```
 
 4. Then you can use following functions to show the overlapping-avoided tooltips. 
@@ -25,7 +25,7 @@ This plugin is designed to avoid tooltip overlapping and make users find out the
    | Function           | Description                              |
    | ------------------ | ---------------------------------------- |
    | initialize(map)    | Add several events, including zoom events on the map and mouse events on tooltip and markers. If you have events such as click on the tooltip, you can find the function `addMarkerHoverEvents()` in `overlapping-avoided.js` and add your event to it. |
-   | avoidOverlapping() | Calculate each position of each tooltip in order to avoid overlapping and draw line between each tooltip and marker. It is designed based on Force-Directed Drawing Algorithms. |
+   | avoidOverlapping(map) | Calculate each position of each tooltip in order to avoid overlapping and draw line between each tooltip and marker. It is designed based on Force-Directed Drawing Algorithms. |
 
 ## License
 
