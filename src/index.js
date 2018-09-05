@@ -12,6 +12,8 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
   id: 'mapbox.streets'
 }).addTo(map);
 
+clear();
+
 L.geoJSON(testData, {
   pointToLayer: function(feature, latlng) {
     var marker = L.marker(latlng, {
@@ -37,7 +39,4 @@ function onEachFeature(feature, layer) {
 
 
 initialize(map);
-removeAllPolyline(map);
-setRandomPos(map);
-layoutByForce(map);
-drawLine(map);
+avoidOverlapping(map);

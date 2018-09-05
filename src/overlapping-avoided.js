@@ -19,6 +19,10 @@ var iconlarge = L.icon({
 });
 
 
+function clear() {
+  markerList = []; // all markers here
+  polylineList = [];
+}
 
 function initialize(map) {
   // event registrations
@@ -32,6 +36,13 @@ function initialize(map) {
     drawLine(map);
   });
   addMarkerHoverEvents();
+}
+
+function avoidOverlapping(map) {
+  removeAllPolyline(map);
+  setRandomPos();
+  layoutByForce();
+  drawLine(map);
 }
 
 
