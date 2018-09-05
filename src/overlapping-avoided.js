@@ -1,12 +1,16 @@
 // global variables
 var markerList = []; // all markers here
 var polylineList = []; // all polylines here
+var dragOffset = [0, 0];
+var tempDrag = [0, 0]
+
 const tooltipOption = {
   classname: 'heading',
   permanent: true,
   interactive: true,
   direction: 'left',
 };
+var moveOffset = [];
 
 var icon = L.icon({
   iconUrl: 'circle-grey.png',
@@ -33,8 +37,24 @@ function initialize(map) {
   map.on('zoomend', function () {
     setRandomPos(map);
     layoutByForce();
+    setEdgePosition();
     drawLine(map);
   });
+
+  map.on('mousedown', function (event) {
+    tempDrag = [event.containerPoint.x, event.containerPoint.y];
+  });
+
+  map.on('mouseup', function (event) {
+    dragOffset = [dragOffset[0] + event.containerPoint.x - tempDrag[0], dragOffset[1] + event.containerPoint.y - tempDrag[1]];
+    console.log(dragOffset);
+    removeAllPolyline(map);
+    setRandomPos(map);
+    layoutByForce();
+    setEdgePosition();
+    drawLine(map);
+  });
+
   addMarkerHoverEvents();
 }
 
@@ -42,6 +62,7 @@ function avoidOverlapping(map) {
   removeAllPolyline(map);
   setRandomPos();
   layoutByForce();
+  setEdgePosition();
   drawLine(map);
 }
 
@@ -64,6 +85,9 @@ function onMarkerMouseover(marker, tooltipDom) {
     marker.ply.setStyle({
       color: '#039BE5'
     });
+    console.log(getPosition(marker._icon));
+    console.log(getPosition(marker.getTooltip()._container));
+    // console.log(map.getBounds());
   };
 }
 
@@ -154,7 +178,8 @@ function setRandomPos() {
     var labelDom = label._container;
     var markerDom = marker._icon;
     var markerPosition = getPosition(markerDom);
-    var angle = Math.floor(Math.random() * 19 + 1) * 2 * Math.PI / 20;
+    // var angle = Math.floor(Math.random() * 19 + 1) * 2 * Math.PI / 20;
+    var angle = 2 * Math.PI / 6 * i;
     var x = markerPosition.x;
     var y = markerPosition.y;
     var dest = L.point(Math.ceil(x + 50 * Math.sin(angle)), Math.ceil(y + 50 * Math.cos(angle)));
@@ -246,5 +271,28 @@ function layoutByForce() {
   for (var i = 0; i < times; i += 1) {
     t = start * (1 - i / (times - 1));
     computePositionStep(t);
+  }
+}
+
+function setEdgePosition() {
+  for (i = 0; i < markerList.length; i++) {
+    var tooltip = getPosition(markerList[i].getTooltip()._container);
+    var marker = getPosition(markerList[i]._icon)
+    var width = markerList[i].getTooltip()._container.offsetWidth;
+    var height = markerList[i].getTooltip()._container.offsetHeight;
+
+    if (marker.x > -dragOffset[0] && tooltip.x < -dragOffset[0]) {
+      tooltip.x = -dragOffset[0];
+    } else if (marker.x < window.innerWidth - dragOffset[0] && tooltip.x > window.innerWidth - dragOffset[0] - width) {
+      tooltip.x = window.innerWidth - width - dragOffset[0];
+    }
+
+    if (marker.y > -dragOffset[1] && tooltip.y < -dragOffset[1]) {
+      tooltip.y = -dragOffset[1];
+    } else if (marker.y < window.innerHeight - dragOffset[1] && tooltip.y > window.innerHeight - dragOffset[1] - height) {
+      tooltip.y = window.innerHeight - height - dragOffset[1];
+    }
+
+    L.DomUtil.setTransform(markerList[i].getTooltip()._container, tooltip);
   }
 }
