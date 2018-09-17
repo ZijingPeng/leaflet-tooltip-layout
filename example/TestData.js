@@ -1,4 +1,4 @@
-﻿var testData = {
+﻿export default {
   'features': [{
     'geometry': {
       'coordinates': [-86.87529, 40.4167],

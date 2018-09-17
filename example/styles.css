@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* translate animation */
+.leaflet-tooltip {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* remove arrow in tooltips */
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+  visibility: hidden;
+}
