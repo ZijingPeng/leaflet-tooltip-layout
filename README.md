@@ -2,15 +2,13 @@
 
 This plugin is designed to avoid tooltip overlapping and make users find out the relationship between each tooltip and marker easily. It is based on [Force-Directed Drawing Algorithms](http://cs.brown.edu/people/rtamassi/gdhandbook/chapters/force-directed.pdf) in the chapter 12 of the book Handbook of Graph Drawing and Visualization written by Stephen G. Kobourov.
 
+Here is the [demo](https://zijingpeng.github.io/overlapping-avoided-tooltip/).
+
 
 
 ## How to use it?
 
-1. Add `overlapping-avoided.css`, `normalize.css`, `leaflet.css(version 1.3.4)` and `overlapping-avoided.js`, `leaflet.js(version 1.3.4)` to your code.
-
-2. Use `clear()` to clear the exist markers and tooltips before add new one
-
-3. Each time when you want to add a marker with a tooltip, you should add `icon: icon` as one option of marker and `tooltipOption` as the option of tooltip.
+1. Each time when you want to add a marker with a tooltip, you should add `icon: icon` as one option of marker and `tooltipOption` as the option of tooltip. Also, remember to push each marker to a list.
 
    Usage example:
 
@@ -18,16 +16,14 @@ This plugin is designed to avoid tooltip overlapping and make users find out the
    var marker = L.marker(latlng, {
      icon: icon
    });
+   markerList.push(marker);
 
    layer.bindTooltip("Hello World", tooltipOption);
    ```
 
-4. Then you can use following functions to show the overlapping-avoided tooltips. 
+2. Use `initialize(map, markerList, onPolylineCreated)` to create the layout. `onPolylineCreated` can be a callback function to define the events and the styles of the lines between markers and tooltips. If you want to use the default lines, just let the parameter as `null`.
 
-   | Function           | Description                              |
-   | ------------------ | ---------------------------------------- |
-   | initialize(map)    | Add several events, including zoom events on the map and mouse events on tooltip and markers. If you have events such as click on the tooltip, you can find the function `addMarkerHoverEvents()` in `overlapping-avoided.js` and add your event to it. |
-   | avoidOverlapping(map) | Calculate each position of each tooltip in order to avoid overlapping and draw line between each tooltip and marker. It is designed based on Force-Directed Drawing Algorithms. |
+   ​
 
 
 
