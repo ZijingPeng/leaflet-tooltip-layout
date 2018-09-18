@@ -7,8 +7,7 @@
     "serve": "cross-env NODE_ENV=development parcel ./example/index.html",
     "build": "npm-run-all -s clean build:lib build:demo",
     "build:lib": "cross-env NODE_ENV=production parcel build ./lib/index.js --out-dir ./dist/lib/ --out-file leaflet-plugin-tooltip-layout.dist.js",
-    "build:demo": "cross-env NODE_ENV=production parcel build ./example/index.html --out-dir ./dist/demo/",
-    "clean": "rimraf ./dist/*",
+    "build:demo": "cross-env NODE_ENV=production parcel build ./example/index.html --out-dir ./dist/demo/ --public-url /overlapping-avoided-tooltip",    "clean": "rimraf ./dist/*",
     "prepublish": "yarn build || npm run build"
   },
   "dependencies": {
