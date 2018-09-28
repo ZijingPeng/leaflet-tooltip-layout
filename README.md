@@ -9,9 +9,9 @@ This plugin is designed to avoid tooltip overlapping and make users find out the
 ## Installation
 
 ```shell
-npm i leaflet-plugin-tooltip-layout --save
+npm i leaflet-tooltip-layout --save
 # or
-yarn add leaflet-plugin-tooltip-layout
+yarn add leaflet-tooltip-layout
 ```
 
 Or you can just copy `./lib/index.js` to your project and rename it to what you want.
@@ -23,9 +23,9 @@ Or you can just copy `./lib/index.js` to your project and rename it to what you 
 ### *ES6*
 
 ```js
-import * as tooltipLayout from 'leaflet-plugin-tooltip-layout';
+import * as tooltipLayout from 'leaflet-tooltip-layout';
 // or
-import { resetMarker, getMarkers, getLine, initialize, getLine } from 'leaflet-plugin-tooltip-layout';
+import { resetMarker, getMarkers, getLine, initialize, getLine } from 'leaflet-tooltip-layout';
 ```
 
 
@@ -33,15 +33,17 @@ import { resetMarker, getMarkers, getLine, initialize, getLine } from 'leaflet-p
 ### *CommonJS*
 
 ```js
-const tooltipLayout = require('leaflet-plugin-tooltip-layout');
+const tooltipLayout = require('leaflet-tooltip-layout');
 ```
 
 
 
 ### *Browser*
 
+Make sure `leaflet` is imported before this plugin, and `window.L` is available
+
 ```html
-<script type="text/javascript" src="/path/to/leaflet-plugin-tooltip-layout.js"></script>
+<script type="text/javascript" src="/path/to/leaflet-tooltip-layout.js"></script>
 ```
 
 
@@ -108,7 +110,7 @@ const tooltipLayout = require('leaflet-plugin-tooltip-layout');
 
 ```shell
 git clone git@github.com:ZijingPeng/leaflet-tooltip-layout.git
-cd ./Overlapping-Avoided-Tooltip-for-Leaflet
+cd ./leaflet-tooltip-layout
 
 npm i # install dependencies
 npm run build # build lib & example
