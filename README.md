@@ -1,36 +1,113 @@
-# Overlapping-Avoided Tooltip for Leaflet
+# leaflet-tooltip-layout
 
 This plugin is designed to avoid tooltip overlapping and make users find out the relationship between each tooltip and marker easily. It is based on [Force-Directed Drawing Algorithms](http://cs.brown.edu/people/rtamassi/gdhandbook/chapters/force-directed.pdf) in the chapter 12 of the book Handbook of Graph Drawing and Visualization written by Stephen G. Kobourov.
 
-Here is the [demo](https://zijingpeng.github.io/overlapping-avoided-tooltip/).
+[Here is the demo](https://zijingpeng.github.io/overlapping-avoided-tooltip/)
 
 
 
-## How to use it?
+## Installation
 
-1. Each time when you want to add a marker with a tooltip, you should add `icon: icon` as one option of marker and `tooltipOption` as the option of tooltip. Also, remember to push each marker to a list.
+```shell
+npm i leaflet-plugin-tooltip-layout --save
+# or
+yarn add leaflet-plugin-tooltip-layout
+```
+
+Or you can just copy `./lib/index.js` to your project and rename it to what you want.
+
+
+
+## Getting Started
+
+### *ES6*
+
+```js
+import * as tooltipLayout from 'leaflet-plugin-tooltip-layout';
+// or
+import { resetMarker, getMarkers, getLine, initialize, getLine } from 'leaflet-plugin-tooltip-layout';
+```
+
+
+
+### *CommonJS*
+
+```js
+const tooltipLayout = require('leaflet-plugin-tooltip-layout');
+```
+
+
+
+### *Browser*
+
+```html
+<script type="text/javascript" src="/path/to/leaflet-plugin-tooltip-layout.js"></script>
+```
+
+
+
+## API Reference
+
+1. `L.tooltipLayout.resetMarker(marker)`
+
+   Create the marker, bind tooltip to the marker, then use this function.
 
    Usage example:
 
    ```js
-   var marker = L.marker(latlng, {
+   var marker = L.marker(coord, {
      icon: icon
-   });
-   markerList.push(marker);
-
-   layer.bindTooltip("Hello World", tooltipOption);
+   }).addTo(map);
+   marker.bindTooltip('Hello world!');
+   L.tooltipLayout.resetMarker(marker);
    ```
 
-2. Use `initialize(map, markerList, onPolylineCreated)` to create the layout. `onPolylineCreated` can be a callback function to define the events and the styles of the lines between markers and tooltips. If you want to use the default lines, just let the parameter as `null`.
+2. `L.tooltipLayout.getMarkers()`
 
-   ​
+   Get the all the markers in this layout.
+
+   Usage example:
+
+   ```js
+   var markerList = getMarkers();
+   for (i = 0; i < markerList.length; i++) {
+     marker = markerList[i];
+     tooltip = marker.getTooltip();
+     marker._icon.addEventListener('mouseover', function (){
+       // your code
+     });
+     tooltip._container.addEventListener('mouseover', function (){
+       // your code
+     });
+   }
+   ```
+
+3. `L.tooltipLayout.getLine(marker)`
+
+   Get the line between one marker and its tooltip.
+
+4. `L.tooltipLayout.initialize(map, onPolylineCreated)`
+
+   After adding all the markers and tooltips, use this function to create the layout.
+
+   `onPolylineCreated` is a callback function that allows you to define the style of the line between markers and tooltips, if you want the default one, let this parameter `null`. 
+
+   Or you can define the function like this:
+
+   ```js
+   function onPolylineCreated(ply) {
+     ply.setStyle({
+       color: '#90A4AE'
+     })
+   }
+   ```
 
 
 
 ## Build Guide
 
 ```shell
-git clone git@github.com:ZijingPeng/Overlapping-Avoided-Tooltip-for-Leaflet.git
+git clone git@github.com:ZijingPeng/leaflet-tooltip-layout.git
 cd ./Overlapping-Avoided-Tooltip-for-Leaflet
 
 npm i # install dependencies
@@ -45,3 +122,4 @@ npm run serve # enter dev zone
 ## License
 
 MIT License
+

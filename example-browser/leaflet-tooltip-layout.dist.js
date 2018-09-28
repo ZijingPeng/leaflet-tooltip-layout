@@ -11,12 +11,12 @@
   var TooltipLayout = {};
 
   // global variables
-  var map;
-  var markerList = []; // all markers here
-  var polylineList = []; // all polylines here
+  let map;
+  let markerList = []; // all markers here
+  let polylineList = []; // all polylines here
 
   // events
-  var _onPolylineCreated = null; // will be called after polyline has been created
+  let _onPolylineCreated = null; // will be called after polyline has been created
 
   function initialize(leafletMap, onPolylineCreated) {
     map = leafletMap;

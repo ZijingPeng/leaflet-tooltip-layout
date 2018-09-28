@@ -1,6 +1,9 @@
 import * as L from 'leaflet';
 import {
-  initialize
+  initialize,
+  resetMarker,
+  getMarkers,
+  getLine
 } from '../lib';
 import {
   icon,
@@ -28,25 +31,17 @@ L.geoJSON(testData, {
     let marker = L.marker(latlng, {
       icon: icon
     });
-    markerList.push(marker);
     return marker;
   },
   onEachFeature(feature, layer) {
-    const tooltipOption = {
-      classname: 'heading',
-      permanent: true,
-      interactive: true,
-      direction: 'left'
-    };
-    layer.bindTooltip(feature.properties.name, tooltipOption);
     feature.properties.alternates.features.forEach((iter, index) => {
       let name = iter.properties.name + ' ' + index;
       let coord = [iter.geometry.coordinates[1], iter.geometry.coordinates[0]];
       let marker = L.marker(coord, {
         icon: icon
       }).addTo(map);
-      marker.bindTooltip(name, tooltipOption);
-      markerList.push(marker);
+      marker.bindTooltip(name);
+      resetMarker(marker);
     });
   }
 }).addTo(map);
@@ -59,7 +54,7 @@ function addMarkerHoverEvents() {
       marker._icon.style.zIndex = 999;
       tooltipDom.style.zIndex = 999;
       tooltipDom.style.border = '2px solid #039BE5';
-      marker.__ply && marker.__ply.setStyle({
+      getLine(marker) && getLine(marker).setStyle({
         color: '#039BE5'
       });
     };
@@ -72,13 +67,14 @@ function addMarkerHoverEvents() {
       tooltipDom.style.zIndex = '';
       tooltipDom.style.border = '';
       tooltipDom.style.borderColor = '';
-      marker.__ply && marker.__ply.setStyle({
+      getLine(marker) && getLine(marker).setStyle({
         color: '#90A4AE'
       });
     };
   }
 
   var i, marker, tooltip;
+  var markerList = getMarkers();
   for (i = 0; i < markerList.length; i++) {
     marker = markerList[i];
     tooltip = marker.getTooltip();
@@ -105,17 +101,7 @@ function onPolylineCreated(ply) {
   ply.setStyle({
     color: '#90A4AE'
   })
-  ply.on('mouseover', function (e) {
-    e.target.setStyle({
-      color: '#039BE5'
-    });
-  });
-  ply.on('mouseout', function (e) {
-    e.target.setStyle({
-      color: '#90A4AE'
-    });
-  });
 }
 
 // init plugin
-initialize(map, markerList, onPolylineCreated);
+initialize(map, onPolylineCreated);
