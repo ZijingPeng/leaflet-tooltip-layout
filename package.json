@@ -1,6 +1,6 @@
 {
   "name": "leaflet-tooltip-layout",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Avoid tooltip overlapping and make users find out the relationship between each tooltip and marker easily",
   "private": false,
   "main": "./lib/index.js",
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@types/leaflet": "^1.2.11",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^9.0.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
