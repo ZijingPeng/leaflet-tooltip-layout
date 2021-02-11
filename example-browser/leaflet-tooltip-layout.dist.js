@@ -33,10 +33,7 @@
       };
     }
 
-    setRandomPos(map);
-    layoutByForce();
-    setEdgePosition();
-    drawLine(map);
+    redrawLines(false);
 
     // event registrations
     map.on('zoomstart', function() {
@@ -44,27 +41,30 @@
     });
 
     map.on('zoomend', function() {
-      setRandomPos(map);
-      layoutByForce();
-      setEdgePosition();
-      drawLine(map);
+      redrawLines(false);
     });
 
     map.on('dragend', function() {
-      removeAllPolyline(map);
-      setRandomPos(map);
-      layoutByForce();
-      setEdgePosition();
-      drawLine(map);
+      redrawLines();
     });
 
     map.on('resize', function() {
-      removeAllPolyline(map);
-      setRandomPos(map);
-      layoutByForce();
-      setEdgePosition();
-      drawLine(map);
+      redrawLines();
     });
+  }
+
+  function redrawLines(maintainAllPolyline) {
+    if (!maintainAllPolyline) {
+      removeAllPolyline();
+    }
+    setRandomPos(map);
+    layoutByForce();
+    setEdgePosition();
+    drawLine(map);
+  }
+
+  function addMarker(marker) {
+    markerList.push(marker)
   }
 
   function resetMarker(marker) {
@@ -208,8 +208,13 @@
     var v_pos;
     var v;
     var i;
+    var length = markerList.length;
 
-    for (i = 0; i < markerList.length; i++) {
+    if (markerList.length >= 150) {
+      length = 150;
+    }
+
+    for (i = 0; i < length; i++) {
       v = markerList[i];
       // get position of label v
       v.disp = L.point(0, 0);
@@ -320,8 +325,10 @@
   }
 
   TooltipLayout['initialize'] = initialize;
+  TooltipLayout['redrawLines'] = redrawLines;
   TooltipLayout['resetMarker'] = resetMarker;
   TooltipLayout['getMarkers'] = getMarkers;
+  TooltipLayout['addMarker'] = addMarker;
   TooltipLayout['getLine'] = getLine;
   TooltipLayout['removeAllPolyline'] = removeAllPolyline;
 
