@@ -92,17 +92,30 @@ Make sure `leaflet` is imported before this plugin, and `window.L` is available
 
    After adding all the markers and tooltips, use this function to create the layout.
 
-   `onPolylineCreated` is a callback function that allows you to define the style of the line between markers and tooltips, if you want the default one, let this parameter `null`. 
+   `onPolylineCreated` is a callback function that allows you to define the style of the line between markers and tooltips, if you want the default one, let this parameter `null`.
 
    Or you can define the function like this:
 
    ```js
    function onPolylineCreated(ply) {
      ply.setStyle({
-       color: '#90A4AE'
+       color: '#40809d'
      })
    }
    ```
+
+5. `L.tooltipLayout.addMarker(marker)`
+
+   Add new marker to internal marker list
+
+6. `L.tooltipLayout.deleteMarker(marker)`
+
+   Delete specific marker from internal marker list
+
+7. `L.tooltipLayout.resetMapContent()`
+
+   Rmove all exisiting markers, tooltips, lines from the map.
+   If content is dynamically generated to the map, for example realtime contents. It is recommanded to use this function to clear all contents and regenterated content again.
 
 
 
@@ -124,4 +137,3 @@ npm run serve # enter dev zone
 ## License
 
 MIT License
-
